@@ -2,6 +2,14 @@
 
 This repository contains the technical specifications and architectural guides for OpenCSP.
 
+## What is OpenCSP?
+OpenCSP (Cloud Service Platform) is an open-source project that lets you pool your idle computing resources (PCs, servers, etc.) using various open-source tools and offer them to external clients.
+
+Resource provisioning is powered by Terraform and Ansible for idempotency and automation, while cloud-essential capabilities such as SSoT (Single Source of Truth), Audit & TAM (Teleport), and Billing (Lago) are implemented through open-source solutions.
+
+Currently under development with a specific set of tools, with plans to abstract the architecture for compatibility with a broader range of open-source tools in the future.
+
+
 ## Key Features
 - **Declarative Infrastructure**: Manage Proxmox resources via Terraform (OpenTofu) CRs.
 - **GitOps Native**: Automated reconciliation using Flux CD and Tofu-controller.
