@@ -1,5 +1,7 @@
 # OpenCSP Documentation
 
+**[ [English](README.md) | [한국어](./README.ko.md) ]**
+
 This repository contains the technical specifications and architectural guides for OpenCSP.
 
 ## What is OpenCSP?

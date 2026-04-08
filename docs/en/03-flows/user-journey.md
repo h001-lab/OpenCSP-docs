@@ -1,27 +1,4 @@
 
-### Bootstrap Flow
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant Admin as Platform Admin
-    participant Mod as Module (TF/Ansible)
-    participant Ops as Ops (Flux CD)
-    participant Infra as Infrastructure (Proxmox)
-    participant Core as Core Services (k3s VM)
-    participant Console as Web Console (Pod)
-
-    Admin->>Mod: Develop Infrastructure Modules
-    Mod->>Ops: Reference Modules for Deployment
-    Admin->>Ops: Initial Provisioning via CLI
-    Ops->>Infra: Initialize GitOps Engine (Bootstrap)
-    Ops->>Core: Create Core Services Instance (k3s based)
-    Ops->>Console: Deploy Management Console (via Ops)
-    
-    Note over Admin, Console: OpenCSP Core Service Operations Started
-```
-
-
 ### User Flow
 
 - Auth : Sign-up / Sign-in / Sign-out
@@ -103,37 +80,3 @@ sequenceDiagram
     Console-->>User: Display Final Status on Dashboard
 ```
 
-
-
-### API Authorization Flow
-```mermaid
-sequenceDiagram
-    autonumber
-    participant Zitadel as ZITADEL (IAM)
-    participant BE as Backend API (Core)
-    participant FE as Web Console (FE)
-    actor User as End User
-
-    Note over Zitadel, BE: Initial Setup (or Periodic Refresh)
-    BE->>Zitadel: GET /oauth/v2/keys (JWKS)
-    Zitadel-->>BE: Public Key Set
-    BE->>BE: Cache Public Keys in Memory
-
-    Note over User, BE: Request Authorization
-    User->>FE: Access Protected Resource
-    FE->>BE: API Request (Header: Authorization: Bearer <JWT>)
-    
-    BE->>BE: 1. Extract JWT from Header
-    BE->>BE: 2. Validate Signature using Cached Public Key
-    BE->>BE: 3. Verify Claims (iss, aud, exp)
-    BE->>BE: 4. Extract Roles/Permissions from Token
-
-    alt Token Valid & Authorized
-        BE->>BE: Process Request based on RBAC
-        BE-->>FE: Return Data (200 OK)
-    else Token Invalid / Expired
-        BE-->>FE: 401 Unauthorized
-    else Insufficient Permissions
-        BE-->>FE: 403 Forbidden
-    end
-```
